@@ -1,7 +1,10 @@
 import React from 'react'
 import { assets } from '../assets/assets'
+import { useAppContext } from '../context/AppContext'
 
 const Header = () => {
+    const {setInput ,input} = useAppContext();
+    
   return (
   <div className="mx-8 sm:mx-16 xl:mx-24 relative overflow-hidden">
       {/* Notification Badge */}
@@ -23,7 +26,7 @@ const Header = () => {
         </p>
 
         {/* Search Form */}
-        <form className="flex justify-between max-w-lg mx-auto border border-gray-300 bg-white rounded overflow-hidden">
+        <form onSubmit={onSubmitHandler} className="flex justify-between max-w-lg mx-auto border border-gray-300 bg-white rounded overflow-hidden">
           <input
             type="text"
             placeholder="Search for blogs"

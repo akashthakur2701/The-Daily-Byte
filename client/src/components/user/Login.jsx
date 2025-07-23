@@ -1,10 +1,23 @@
 import React, { useState } from 'react'
-
+import { useAppContext } from '../../context/AppContext';
+import toast from 'react-hot-toast';
+import axios from 'axios';
 const Login = () => {
+    const {axios,setToken} = useAppContext();
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
     const handleSubmit = async (e)=>{
-      e.preventDefault()
+      e.preventDefault();
+      try{
+        const {data} = await axios.post('/api/user/login',{email,password});
+        if(data.success){
+            setToken(data.token);
+            localStorage.setItem('token',data.token);
+            axios.defaults.headers.common['Authorization']= data.token ;
+        }
+      }catch (error){
+        toast.error(error.message);
+      }
     }
   return (
     <div className='flex items-center justify-center h-screen'>
